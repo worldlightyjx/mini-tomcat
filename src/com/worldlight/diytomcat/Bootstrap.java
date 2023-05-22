@@ -1,6 +1,7 @@
 package com.worldlight.diytomcat;
 
 import cn.hutool.core.util.NetUtil;
+import com.worldlight.diytomcat.http.Request;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -25,11 +26,13 @@ public class Bootstrap {
             ServerSocket ss = new ServerSocket(port);
             while (true){
                 Socket s = ss.accept();
-                InputStream is = s.getInputStream();
+                Request request = new Request(s);
+  /*              InputStream is = s.getInputStream();
                 byte[] buffer = new byte[1024];
                 is.read(buffer);
-                String requestString = new String(buffer, StandardCharsets.UTF_8);
-                System.out.println("Browser input info：\r\n"+requestString);
+                String requestString = new String(buffer, StandardCharsets.UTF_8);*/
+                System.out.println("Browser input info：\r\n"+request.getRequestString());
+                System.out.println("uri："+request.getUri());
 
                 OutputStream os = s.getOutputStream();
                 String response_head = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n\r\n";

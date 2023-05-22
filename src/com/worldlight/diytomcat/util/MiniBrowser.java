@@ -1,9 +1,6 @@
 package com.worldlight.diytomcat.util;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
@@ -22,7 +19,7 @@ public class MiniBrowser {
         String url = "http://static.how2j.cn/diytomcat.html";
         String contentString = getContentString(url, false);
         System.out.println(contentString);
-        String httpString= getHttpString(url,false);
+        String httpString = getHttpString(url, false);
         System.out.println(httpString);
     }
 
@@ -112,21 +109,7 @@ public class MiniBrowser {
             printWriter.println(httpRequestString);
             InputStream is = client.getInputStream();
 
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-
-            while (true) {
-                int length = is.read(buffer);
-                if (-1 == length) {
-                    break;
-                }
-                byteArrayOutputStream.write(buffer, 0, length);
-                if (length != 1024) {
-                    break;
-                }
-            }
-
-            result = byteArrayOutputStream.toByteArray();
+            result = readBytes(is);
             client.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -135,4 +118,23 @@ public class MiniBrowser {
         return result;
 
     }
+
+    public static byte[] readBytes(InputStream is) throws IOException {
+        int buffer_size = 1024;
+        byte[] buffer = new byte[buffer_size];
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        while (true) {
+            int length = is.read(buffer);
+            if (-1 == length) {
+                break;
+            }
+            baos.write(buffer, 0, length);
+            if (length != buffer_size) {
+                break;
+            }
+        }
+        return baos.toByteArray();
+    }
+
+
 }

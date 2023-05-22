@@ -4,6 +4,7 @@ import cn.hutool.core.util.NetUtil;
 import cn.hutool.core.util.StrUtil;
 import com.worldlight.diytomcat.util.MiniBrowser;
 import org.jsoup.internal.StringUtil;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -30,7 +31,8 @@ public class TestTomcat {
 
     @Test
     public void testHelloTomcat(){
-
+        String html = getContent("/");
+        Assert.assertEquals(html,"Hello DIY Tomcat from worldlight.com");
     }
 
     private String getContent(String uri){
