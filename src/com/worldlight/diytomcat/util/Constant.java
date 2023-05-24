@@ -1,5 +1,9 @@
 package com.worldlight.diytomcat.util;
 
+import cn.hutool.system.SystemUtil;
+
+import java.io.File;
+
 /**
  * @Author yangjiaxin
  * @Date 2023/5/22
@@ -7,4 +11,8 @@ package com.worldlight.diytomcat.util;
 public class Constant {
     public final static String RESPONSE_HEAD_202 = "HTTP/1.1 200 OK\r\n" +
             "Content-Type: {}\r\n\r\n";
+
+    public final static File webappsFolder = new File(SystemUtil.get(SystemUtil.USER_DIR),"webapps");
+    public final static File rootFolder = new File(webappsFolder,"root");
+
 }

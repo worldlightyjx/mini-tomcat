@@ -31,11 +31,17 @@ public class TestTomcat {
 
     @Test
     public void testHelloTomcat(){
-        String html = getContent("/");
+        String html = getContentString("/");
         Assert.assertEquals(html,"Hello DIY Tomcat from worldlight.com");
     }
 
-    private String getContent(String uri){
+    @Test
+    public void testaHtml() {
+        String html = getContentString("/a.html");
+        Assert.assertEquals(html,"Hello DIY Tomcat from worldlight.com");
+    }
+
+    private String getContentString(String uri){
         String url = StrUtil.format("http://{}:{}{}",ip,port, uri);
         String content = MiniBrowser.getContentString(url);
         return content;
