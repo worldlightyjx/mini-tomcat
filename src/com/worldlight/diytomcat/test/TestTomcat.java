@@ -81,10 +81,35 @@ public class TestTomcat {
 
     }
 
+    @Test
+    public void test404(){
+        String response = getHttpString("/not_exist.html");
+        containAssert(response,"HTTP/1.1 404 Not Found");
+    }
+
+    @Test
+    public void test500() {
+        String response  = getHttpString("/500.html");
+        containAssert(response, "HTTP/1.1 500 Internal Server Error");
+    }
+
     private String getContentString(String uri){
         String url = StrUtil.format("http://{}:{}{}",ip,port, uri);
         String content = MiniBrowser.getContentString(url);
         return content;
     }
+
+    private String getHttpString(String uri){
+        String url = StrUtil.format("http://{}:{}{}",ip,port,uri);
+        String http = MiniBrowser.getHttpString(url);
+        return http;
+    }
+
+    private void containAssert(String html, String match){
+        boolean isMatch = StrUtil.containsAny(html,match);
+        Assert.assertTrue(isMatch);
+    }
+
+
 
 }
