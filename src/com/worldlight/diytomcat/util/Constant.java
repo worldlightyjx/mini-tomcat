@@ -13,6 +13,6 @@ public class Constant {
             "Content-Type: {}\r\n\r\n";
 
     public final static File webappsFolder = new File(SystemUtil.get(SystemUtil.USER_DIR),"webapps");
-    public final static File rootFolder = new File(webappsFolder,"root");
+    public final static File rootFolder = new File(webappsFolder,"ROOT");
 
 }
