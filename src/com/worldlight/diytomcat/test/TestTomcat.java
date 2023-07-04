@@ -55,6 +55,12 @@ public class TestTomcat {
     }
 
     @Test
+    public void testbIndex(){
+        String html = getContentString("/b/index.html");
+        Assert.assertEquals(html,"Hello DIY Tomcat from index.html@b");
+    }
+
+    @Test
     public void testTimeConsumeHtml() throws InterruptedException {
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(20,20,
                 60, TimeUnit.SECONDS,new LinkedBlockingDeque<>(10));

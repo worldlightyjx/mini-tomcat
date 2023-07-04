@@ -3,6 +3,9 @@ package com.worldlight.diytomcat.http;
 import cn.hutool.core.util.StrUtil;
 import com.worldlight.diytomcat.Bootstrap;
 import com.worldlight.diytomcat.catalina.Context;
+import com.worldlight.diytomcat.catalina.Engine;
+import com.worldlight.diytomcat.catalina.Host;
+import com.worldlight.diytomcat.catalina.Service;
 import com.worldlight.diytomcat.util.MiniBrowser;
 import org.apache.tools.ant.taskdefs.Input;
 
@@ -23,8 +26,13 @@ public class Request {
 
     private Context context;
 
-    public Request(Socket socket) throws IOException {
+
+
+    private Service service;
+
+    public Request(Socket socket,Service service) throws IOException {
         this.socket = socket;
+        this.service = service;
         parseRequest();
         if (StrUtil.isEmpty(requestString)) {
             return;
@@ -61,9 +69,10 @@ public class Request {
         } else {
             path = "/" + path;
         }
-        context = Bootstrap.contextMap.get(path);
+        Engine engine = service.getEngine();
+        context = engine.getDefaultHost().getContext(path);
         if (null == context) {
-            context = Bootstrap.contextMap.get("/");
+            context = engine.getDefaultHost().getContext("/");
         }
     }
 
